@@ -1,0 +1,23 @@
+.header {
+
+    padding-bottom: 10px;
+
+}
+
+.note {
+    padding:10px;
+}
+
+.note-link {
+    font-size:10px;
+    text-decoration-line: none;
+
+    font-weight: bold;
+
+}
+
+.note-link:hover {
+    cursor: pointer;
+    color: blue;
+    text-decoration-line: underline;
+}

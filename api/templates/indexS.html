@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{%  load crispy_forms_tags %}
+{% block content %}
+
+        <div class="row" style="padding-bottom: 10px;">
+            <div class="col header">
+                Welcome {{ user.first_name }} {{ user.last_name }}  ( <a href="/logout">logout</a> )
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-4">
+                <form id="note_save" name="note_save" class="form-inline" action="/" method="post">
+                    {% csrf_token %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                <input type="text" name="note_title" id="note_title" class="form-control col-sm-12" placeholder="Title">
+                                </div>
+                                <div class="form-group">
+                                <textarea name="note_body" rows="10" id="note_body" class="form-control" placeholder="What's on your mind?"></textarea>
+                                </div>
+                                <input type="hidden" id="note_key" name="note_key" value="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                <input style="alignment: center" type="submit" class="btn btn-info"  value="save">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="col-sm-8">
+                <div class="container-fluid">
+                {% for note in notes %}
+                    <div class="row">
+                        <div class="col" style="background-color:
+                        {% if note.pk|divisibleby:2 %}
+                                powderblue
+                                {% else %}
+                                lightgray
+                                {% endif %}
+                                ">
+                            <span>
+                                {{ note.title }}
+                                {% if note.username == user.username %}
+                                    <a class="note-link" onclick="edit_note({{ note.pk }})">Edit</a>
+                                    <a class="note-link" onclick="delete_note({{ note.pk }})">Delete</a>
+
+                                <input type="hidden" id="title{{ note.pk }}" value="{{ note.title }}">
+                                <input type="hidden" id="body{{ note.pk }}" value="{{ note.body }}">
+
+                            {% endif %}
+                            </span>
+                            <h6 style="font-size: 10px;">
+                                {{ note.first_name}} {{ note.last_name }} ({{ note.username }}) -- {{ note.date_created }}</h6>
+                            <h6>{{ note.body }}</h6>
+
+
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+{% endblock %}
