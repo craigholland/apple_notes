@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from api.models import Note
-
+from logger import Logger
 
 def userlogout(request):
     logout(request)
@@ -9,9 +9,11 @@ def userlogout(request):
 
 
 def userlogin(request):
+
     u, p = (str(request.POST['username']),
             str(request.POST['password']))
     user = authenticate(username=u, password=p)
+
     if user is not None:
         login(request, user)
         return True
@@ -19,6 +21,7 @@ def userlogin(request):
 
 
 def userpost(request):
+
     try:
         title, body, key = (str(request.POST['note_title']),
                             str(request.POST['note_body']),
@@ -52,6 +55,7 @@ def index(request):
 
     if request.POST:
         _handlePosts(request)
+
         return HttpResponseRedirect('/')
 
     notes = Note.objects.all().order_by('-date_created')

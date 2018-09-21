@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api',
-    'crispy_forms'
+    'crispy_forms',
+    'tastypie',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from api.resources import NoteResource
+from api.resources import NoteResource, UserResource
 from api import views
+from tastypie.api import Api
+
+notes_api = Api(api_name='notes')
+notes_api.register(UserResource())
+notes_api.register(NoteResource())
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(NoteResource().urls)),
+    url(r'^api/', include(notes_api.urls)),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^logout/', views.userlogout),
     url(r'^$', views.index)

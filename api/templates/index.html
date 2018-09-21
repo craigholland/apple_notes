@@ -35,7 +35,7 @@
         {% for note in notes %}
             <div class="row">
                 <div class="col" style="padding: 10px; background-color:
-                {% if note.pk|divisibleby:2 %}
+                {% if forloop.counter|divisibleby:2 %}
                         powderblue
                         {% else %}
                         lightgray
